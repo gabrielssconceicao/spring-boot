@@ -18,10 +18,10 @@ public class ClientController {
     client1.setEmail("jdoe@ex.com");
     client1.setTelephone("(11) 99999-9999");
     Client client2 = new Client();
-    client1.setId(2);
-    client1.setName("Mary Doe");
-    client1.setEmail("mdoe@ex.com");
-    client1.setTelephone("(41) 5353-9999");
+    client2.setId(2);
+    client2.setName("Mary Doe");
+    client2.setEmail("mdoe@ex.com");
+    client2.setTelephone("(41) 5353-9999");
 
     return Arrays.asList(client1, client2);
   }
