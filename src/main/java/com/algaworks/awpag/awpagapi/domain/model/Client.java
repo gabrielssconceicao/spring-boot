@@ -1,14 +1,22 @@
 package com.algaworks.awpag.awpagapi.domain.model;
 
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-// Create getters and setters for all properties
+
+
+@Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
 public class Client {
 
-  private int id;
+  @EqualsAndHashCode.Include
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
   private String name;
   private String email;
   private String telephone;
