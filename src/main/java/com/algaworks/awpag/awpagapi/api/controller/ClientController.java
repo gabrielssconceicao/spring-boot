@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.algaworks.awpag.awpagapi.domain.repositoriy.IClientRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +43,28 @@ public class ClientController {
     @PostMapping
     public Client create(@RequestBody Client client) {
         return clientRepository.save(client);
+    }
+
+
+    @PutMapping("/{clientId}")
+    public ResponseEntity<Client> update(@PathVariable Long clientId, @RequestBody Client client) {
+        if(!clientRepository.existsById(clientId)) {
+            return  ResponseEntity.notFound().build();
+        }
+
+        client.setId(clientId);
+        client = clientRepository.save(client);
+        return  ResponseEntity.ok(client);
+    }
+
+
+    @DeleteMapping("/{clientId}")
+    public ResponseEntity<Void> delete(@PathVariable Long clientId){
+        if(!clientRepository.existsById(clientId)) {
+            return  ResponseEntity.notFound().build();
+        }
+        clientRepository.deleteById(clientId);
+        return ResponseEntity.noContent().build();
+
     }
 }
