@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.algaworks.awpag.awpagapi.domain.repositoriy.IClientRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,6 @@ import com.algaworks.awpag.awpagapi.domain.model.Client;
 @RestController
 @RequestMapping("/clients")
 public class ClientController {
-
-    // @Autowired -> aplica uma instancia de IClientRepository
 
     private final IClientRepository clientRepository;
 
@@ -41,13 +40,16 @@ public class ClientController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Client create(@RequestBody Client client) {
+    public Client create(@Valid @RequestBody Client client) {
         return clientRepository.save(client);
     }
 
 
     @PutMapping("/{clientId}")
-    public ResponseEntity<Client> update(@PathVariable Long clientId, @RequestBody Client client) {
+    public ResponseEntity<Client> update(
+            @PathVariable Long clientId,
+            @Valid @RequestBody Client client
+    ) {
         if(!clientRepository.existsById(clientId)) {
             return  ResponseEntity.notFound().build();
         }
