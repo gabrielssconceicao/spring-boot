@@ -1,23 +1,26 @@
 package com.algaworks.awpag.awpagapi.api.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import com.algaworks.awpag.awpagapi.domain.repositoriy.IClientRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.awpag.awpagapi.domain.model.Client;
 
+@AllArgsConstructor
 @RestController
 public class ClientController {
-  @PersistenceContext
-  private EntityManager manager;
-  @GetMapping("/clients")
+
+    // @Autowired -> aplica uma instancia de IClientRepository
+
+    private final IClientRepository clientRepository;
+
+
+
+    @GetMapping("/clients")
   public List<Client> list() {
-    return  manager
-            .createQuery("from Client", Client.class)
-            .getResultList();
+      return clientRepository.findAll();
   }
 }
