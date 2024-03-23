@@ -1,6 +1,11 @@
 package com.algaworks.awpag.awpagapi.domain.model;
 
+import com.algaworks.awpag.awpagapi.domain.validation.IValidationGroups;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import jakarta.validation.groups.ConvertGroup;
+import jakarta.validation.groups.Default;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,16 +25,24 @@ public class Parcelamento {
     @EqualsAndHashCode.Include
     private Long id;
 
-
-
-    @ManyToOne
     // @JoinColumn(name = "client_id")
+    @Valid
+    @ConvertGroup(from = Default.class, to= IValidationGroups.ClientId.class)
+    @NotNull
+    @ManyToOne
     private  Client client;
 
+    @NotBlank
+    @Size(max = 20)
     private String descriptions;
 
+    @NotNull
+    @Positive
     private BigDecimal amount;
 
+    @NotNull
+    @Positive
+    @Max(12)
     @Column(name = "qtd_parcelas")
     private Integer qtdParcelas;
 
