@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.algaworks.awpag.awpagapi.domain.exception.BusinessException;
 import com.algaworks.awpag.awpagapi.domain.repositoriy.IClientRepository;
-import com.algaworks.awpag.awpagapi.domain.service.ClientRegistrationService;
+import com.algaworks.awpag.awpagapi.domain.service.ClientService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ import com.algaworks.awpag.awpagapi.domain.model.Client;
 @RequestMapping("/clients")
 public class ClientController {
 
-    private final ClientRegistrationService clientRegistrationService;
+    private final ClientService clientService;
     private final IClientRepository clientRepository;
 
     @GetMapping
@@ -43,7 +43,7 @@ public class ClientController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Client create(@Valid @RequestBody Client client) {
-        return clientRegistrationService.save(client);
+        return clientService.save(client);
     }
 
 
@@ -57,7 +57,7 @@ public class ClientController {
         }
 
         client.setId(clientId);
-        client = clientRegistrationService.save(client);
+        client = clientService.save(client);
         return  ResponseEntity.ok(client);
     }
 
@@ -67,7 +67,7 @@ public class ClientController {
         if(!clientRepository.existsById(clientId)) {
             return  ResponseEntity.notFound().build();
         }
-        clientRegistrationService.delete(clientId);
+        clientService.delete(clientId);
         return ResponseEntity.noContent().build();
     }
 

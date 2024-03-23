@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Service
-public class ClientRegistrationService {
+public class ClientService {
     private final IClientRepository clientRepository;
 
     @Transactional
