@@ -25,6 +25,10 @@ public class ClientService {
         return clientRepository.save(client);
     }
 
+    public Client search(Long clientId) {
+        return clientRepository.findById(clientId).orElseThrow(()-> new BusinessException("Client not Found"));
+    }
+
     @Transactional
     public void delete(Long clientId) {
         clientRepository.deleteById(clientId);
