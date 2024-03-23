@@ -3,10 +3,11 @@ package com.algaworks.awpag.awpagapi.api.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.algaworks.awpag.awpagapi.domain.exception.BusinessException;
 import com.algaworks.awpag.awpagapi.domain.repositoriy.IClientRepository;
+import com.algaworks.awpag.awpagapi.domain.service.ClientRegistrationService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import com.algaworks.awpag.awpagapi.domain.model.Client;
 @RequestMapping("/clients")
 public class ClientController {
 
+    private final ClientRegistrationService clientRegistrationService;
     private final IClientRepository clientRepository;
 
     @GetMapping
@@ -41,7 +43,7 @@ public class ClientController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Client create(@Valid @RequestBody Client client) {
-        return clientRepository.save(client);
+        return clientRegistrationService.save(client);
     }
 
 
@@ -55,7 +57,7 @@ public class ClientController {
         }
 
         client.setId(clientId);
-        client = clientRepository.save(client);
+        client = clientRegistrationService.save(client);
         return  ResponseEntity.ok(client);
     }
 
@@ -65,8 +67,12 @@ public class ClientController {
         if(!clientRepository.existsById(clientId)) {
             return  ResponseEntity.notFound().build();
         }
-        clientRepository.deleteById(clientId);
+        clientRegistrationService.delete(clientId);
         return ResponseEntity.noContent().build();
+    }
 
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<String> capture(BusinessException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
