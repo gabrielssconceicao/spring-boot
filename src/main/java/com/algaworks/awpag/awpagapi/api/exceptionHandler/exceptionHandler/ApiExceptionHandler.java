@@ -1,4 +1,4 @@
-package com.algaworks.awpag.awpagapi.api.controller.exceptionHandler;
+package com.algaworks.awpag.awpagapi.api.exceptionHandler.exceptionHandler;
 
 import com.algaworks.awpag.awpagapi.domain.exception.BusinessException;
 import lombok.AllArgsConstructor;

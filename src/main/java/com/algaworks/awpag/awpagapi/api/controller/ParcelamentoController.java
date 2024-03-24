@@ -2,6 +2,7 @@ package com.algaworks.awpag.awpagapi.api.controller;
 
 
 
+import com.algaworks.awpag.awpagapi.api.model.ParcelamentoModel;
 import com.algaworks.awpag.awpagapi.domain.model.Parcelamento;
 import com.algaworks.awpag.awpagapi.domain.repositoriy.IParcelamentoRepository;
 import com.algaworks.awpag.awpagapi.domain.service.ParcelamentoService;
@@ -26,8 +27,18 @@ public class ParcelamentoController {
     }
 
     @GetMapping("/{parcelamentoId}")
-    public ResponseEntity<Parcelamento> search(@PathVariable Long parcelamentoId) {
+    public ResponseEntity<ParcelamentoModel> search(@PathVariable Long parcelamentoId) {
         return parcelamentoRepository.findById(parcelamentoId)
+                .map(parcelamento -> {
+                    var parcelamentoModel = new ParcelamentoModel();
+                    parcelamentoModel.setId(parcelamento.getId());
+                    parcelamentoModel.setClientName(parcelamento.getClient().getName());
+                    parcelamentoModel.setDescription(parcelamento.getDescriptions());
+                    parcelamentoModel.setAmount(parcelamento.getAmount());
+                    parcelamentoModel.setParcelas(parcelamento.getQtdParcelas());
+                    parcelamentoModel.setCreationDate(parcelamento.getCreationDate());
+                    return parcelamentoModel;
+                })
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
