@@ -1,5 +1,6 @@
 package com.algaworks.awpag.awpagapi.api.assembler;
 
+import com.algaworks.awpag.awpagapi.api.model.input.ParcelamentoInput;
 import com.algaworks.awpag.awpagapi.api.model.output.ParcelamentoModel;
 import com.algaworks.awpag.awpagapi.domain.model.Parcelamento;
 import lombok.AllArgsConstructor;
@@ -23,5 +24,9 @@ public class ParcelamentoAssembler {
                 .stream()
                 .map(this::toModel)
                 .toList();
+    }
+
+    public Parcelamento toEntity(ParcelamentoInput parcelamentoInput) {
+        return modelMapper.map(parcelamentoInput,Parcelamento.class);
     }
 }
