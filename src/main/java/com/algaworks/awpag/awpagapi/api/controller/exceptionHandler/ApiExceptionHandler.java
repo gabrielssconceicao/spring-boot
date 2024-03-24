@@ -1,11 +1,12 @@
 package com.algaworks.awpag.awpagapi.api.controller.exceptionHandler;
 
 import com.algaworks.awpag.awpagapi.domain.exception.BusinessException;
+import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.*;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,8 +18,11 @@ import java.net.URI;
 import java.util.stream.Collectors;
 
 // é  capaz de capturar as exceçoes de todos os controllers
+@AllArgsConstructor
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private final MessageSource messageSource;
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
@@ -33,7 +37,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 .stream()
                 .collect(Collectors.toMap(
                         error -> ((FieldError)error).getField(),
-                        DefaultMessageSourceResolvable::getDefaultMessage
+                        error -> messageSource.getMessage(error, LocaleContextHolder.getLocale())
                 ));
         problemDetail.setProperty("fields",fields);
 
@@ -41,7 +45,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<String> capture(BusinessException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+    public ProblemDetail handleBusiness(BusinessException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setTitle(e.getMessage());
+        problemDetail.setType(URI.create("https://api.com/erros/regra-de-negocio"));
+        return problemDetail;
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ProblemDetail handleDataIntegrityViolation(DataIntegrityViolationException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
+        problemDetail.setTitle("Recurso está em uso");
+        problemDetail.setType(URI.create("https://api.com/erros/recurso-em-uso"));
+        return problemDetail;
     }
 }
