@@ -1,6 +1,6 @@
 package com.algaworks.awpag.awpagapi.api.assembler;
 
-import com.algaworks.awpag.awpagapi.api.model.ParcelamentoModel;
+import com.algaworks.awpag.awpagapi.api.model.output.ParcelamentoModel;
 import com.algaworks.awpag.awpagapi.domain.model.Parcelamento;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;

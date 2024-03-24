@@ -1,4 +1,4 @@
-package com.algaworks.awpag.awpagapi.api.model;
+package com.algaworks.awpag.awpagapi.api.model.output;
 
 
 import lombok.Getter;

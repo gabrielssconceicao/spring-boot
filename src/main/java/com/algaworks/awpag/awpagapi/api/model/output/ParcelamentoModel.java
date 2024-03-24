@@ -1,5 +1,6 @@
-package com.algaworks.awpag.awpagapi.api.model;
+package com.algaworks.awpag.awpagapi.api.model.output;
 
+import com.algaworks.awpag.awpagapi.api.model.output.ClientResumoModel;
 import lombok.Getter;
 import lombok.Setter;
 

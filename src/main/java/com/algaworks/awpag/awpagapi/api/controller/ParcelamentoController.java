@@ -3,7 +3,7 @@ package com.algaworks.awpag.awpagapi.api.controller;
 
 
 import com.algaworks.awpag.awpagapi.api.assembler.ParcelamentoAssembler;
-import com.algaworks.awpag.awpagapi.api.model.ParcelamentoModel;
+import com.algaworks.awpag.awpagapi.api.model.output.ParcelamentoModel;
 import com.algaworks.awpag.awpagapi.domain.model.Parcelamento;
 import com.algaworks.awpag.awpagapi.domain.repositoriy.IParcelamentoRepository;
 import com.algaworks.awpag.awpagapi.domain.service.ParcelamentoService;
