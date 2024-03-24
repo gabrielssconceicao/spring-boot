@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 
 @Entity
@@ -47,6 +47,6 @@ public class Parcelamento {
     private Integer qtdParcelas;
 
     @Column(name = "creation_date")
-    private LocalDate creationDate;
+    private OffsetDateTime creationDate;
 
 }

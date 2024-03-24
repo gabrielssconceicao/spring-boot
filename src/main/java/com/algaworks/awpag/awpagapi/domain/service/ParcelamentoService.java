@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @AllArgsConstructor
 @Service
@@ -25,7 +26,7 @@ public class ParcelamentoService {
         Client client = clientService.search(novoParcelamento.getClient().getId());
 
 
-        novoParcelamento.setCreationDate(LocalDate.from(LocalDateTime.now()));
+        novoParcelamento.setCreationDate(OffsetDateTime.now());
         novoParcelamento.setClient(client);
         return parcelamentoRepository.save(novoParcelamento);
     }
