@@ -1,7 +1,7 @@
 package com.algaworks.awpag.awpagapi.api.controller;
 
 
-import com.algaworks.awpag.awpagapi.domain.exception.BusinessException;
+
 import com.algaworks.awpag.awpagapi.domain.model.Parcelamento;
 import com.algaworks.awpag.awpagapi.domain.repositoriy.IParcelamentoRepository;
 import com.algaworks.awpag.awpagapi.domain.service.ParcelamentoService;
@@ -36,11 +36,6 @@ public class ParcelamentoController {
     @ResponseStatus(HttpStatus.CREATED)
     public Parcelamento create(@Valid @RequestBody Parcelamento parcelamento) {
         return parcelamentoService.create(parcelamento);
-    }
-
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<String> capture(BusinessException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
 }

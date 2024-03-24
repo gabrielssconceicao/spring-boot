@@ -3,7 +3,7 @@ package com.algaworks.awpag.awpagapi.api.controller;
 import java.util.List;
 import java.util.Optional;
 
-import com.algaworks.awpag.awpagapi.domain.exception.BusinessException;
+
 import com.algaworks.awpag.awpagapi.domain.repositoriy.IClientRepository;
 import com.algaworks.awpag.awpagapi.domain.service.ClientService;
 import jakarta.validation.Valid;
@@ -71,8 +71,5 @@ public class ClientController {
         return ResponseEntity.noContent().build();
     }
 
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<String> capture(BusinessException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
+
 }
