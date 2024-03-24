@@ -32,14 +32,8 @@ public class ParcelamentoController {
     public ResponseEntity<ParcelamentoModel> search(@PathVariable Long parcelamentoId) {
         return parcelamentoRepository
                 .findById(parcelamentoId)
-
-                .map(parcelamento -> {
-                    var parcelamentoModel = modelMapper.map(parcelamento,ParcelamentoModel.class);
-                    return parcelamentoModel;
-                })
-
+                .map(parcelamento -> modelMapper.map(parcelamento,ParcelamentoModel.class))
                 .map(ResponseEntity::ok)
-
                 .orElse(ResponseEntity.notFound().build());
     }
 
